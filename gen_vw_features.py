@@ -9,18 +9,18 @@ Very mediocre and hacky code, single-purpose, but pretty fast
 Some refactoring by Zygmunt Zając <zygmunt@fastml.com>
 """
 
-from datetime import datetime, date
+from datetime import datetime
 from collections import defaultdict
 
-loc_offers = "/Users/tank/Downloads/offers.csv"
-loc_transactions = "/Users/tank/Downloads/transactions.csv"
-loc_train = "/Users/tank/Downloads/trainHistory.csv"
-loc_test = "/Users/tank/Downloads/testHistory.csv"
+loc_offers = "offersDept.csv"
+loc_transactions = "transactions.csv"
+loc_train = "trainHistory.csv"
+loc_test = "testHistory.csv"
 
 # will be created
-loc_reduced = "data/reduced.csv" 
-loc_out_train = "data/train.vw"
-loc_out_test = "data/test.vw"
+loc_reduced = "reducedCarts" 
+loc_out_train = "train.vw"
+loc_out_test = "test.vw"
 
 ###
 
@@ -29,9 +29,12 @@ def reduce_data(loc_offers, loc_transactions, loc_reduced):
   #get all categories and comps on offer in a dict
   offers_cat = {}
   offers_co = {}
+  offers_dept = {}
   for e, line in enumerate( open(loc_offers) ):
     offers_cat[ line.split(",")[1] ] = 1
     offers_co[ line.split(",")[3] ] = 1
+    offers_dept[ line.split(",")[6] ] = 1
+        
   #open output file
   with open(loc_reduced, "wb") as outfile:
     #go through transactions file and reduce
@@ -41,7 +44,7 @@ def reduce_data(loc_offers, loc_transactions, loc_reduced):
         outfile.write( line ) #print header
       else:
         #only write when if category in offers dict
-        if line.split(",")[3] in offers_cat or line.split(",")[4] in offers_co:
+        if line.split(",")[3] in offers_cat or line.split(",")[4] in offers_co or line.split(",")[2] in offers_dept:
           outfile.write( line )
           reduced += 1
       #progress
@@ -105,6 +108,9 @@ def generate_features(loc_train, loc_test, loc_transactions, loc_out_train, loc_
 					if "has_bought_brand" in features and "has_bought_category" in features:
 						features['has_bought_brand_category'] = 1
 					
+					if "has_bought_category" in features and "has_bought_company" in features:
+						features['has_bought_category_company'] = 1
+					
 					if "has_bought_brand" in features and "has_bought_company" in features:
 						features['has_bought_brand_company'] = 1
 						
@@ -141,7 +147,7 @@ def generate_features(loc_train, loc_test, loc_transactions, loc_out_train, loc_
 					else:
 						history = test_ids[row[0]]
 						features['label'] = 0.5
-						
+								
 					#print "label", label 
 					#print "trainhistory", train_ids[row[0]]
 					#print "transaction", row
@@ -149,8 +155,10 @@ def generate_features(loc_train, loc_test, loc_transactions, loc_out_train, loc_
 					#print
 					
 					features['offer_value'] = offers[ history[2] ][4]
-					features['offer_quantity'] = offers[ history[2] ][2]
-					offervalue = offers[ history[2] ][4]
+#					features['offer_quantity'] = offers[ history[2] ][2]
+					features['market'] = history[3]
+					features['chain'] = row[1]
+                             
 					
 					features['total_spend'] += float( row[10] )
 					
@@ -228,7 +236,7 @@ def generate_features(loc_train, loc_test, loc_transactions, loc_out_train, loc_
 
 
 if __name__ == '__main__':
-	reduce_data(loc_offers, loc_transactions, loc_reduced)
+#	reduce_data(loc_offers, loc_transactions, loc_reduced)
 	generate_features(loc_train, loc_test, loc_reduced, loc_out_train, loc_out_test)
 
 	
