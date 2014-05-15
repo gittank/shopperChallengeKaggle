@@ -9,18 +9,18 @@ Very mediocre and hacky code, single-purpose, but pretty fast
 Some refactoring by Zygmunt Zając <zygmunt@fastml.com>
 """
 
-from datetime import datetime, date
+from datetime import datetime
 from collections import defaultdict
 
-loc_offers = "/Users/tank/Downloads/offers.csv"
-loc_transactions = "/Users/tank/Downloads/transactions.csv"
-loc_train = "/Users/tank/Downloads/trainHistory.csv"
-loc_test = "/Users/tank/Downloads/testHistory.csv"
+loc_offers = "C:/Users/tushar.tank/Documents/GitHub/3PiShopper/Data/offers.csv"
+loc_transactions = "C:/Users/tushar.tank/Documents/GitHub/3PiShopper/Data/transactions.csv"
+loc_train = "C:/Users/tushar.tank/Documents/GitHub/3PiShopper/Data/trainHistory.csv"
+loc_test = "C:/Users/tushar.tank/Documents/GitHub/3PiShopper/Data/testHistory.csv"
 
 # will be created
-loc_reduced = "data/reduced.csv" 
-loc_out_train = "data/train.vw"
-loc_out_test = "data/test.vw"
+loc_reduced = "C:/Users/tushar.tank/Documents/GitHub/3PiShopper/Data/reduced.csv" 
+loc_out_train = "C:/Users/tushar.tank/Documents/GitHub/3PiShopper/Data/train.vw"
+loc_out_test = "C:/Users/tushar.tank/Documents/GitHub/3PiShopper/Data/test.vw"
 
 ###
 
@@ -149,8 +149,8 @@ def generate_features(loc_train, loc_test, loc_transactions, loc_out_train, loc_
 					#print
 					
 					features['offer_value'] = offers[ history[2] ][4]
-					features['offer_quantity'] = offers[ history[2] ][2]
-					offervalue = offers[ history[2] ][4]
+					#features['offer_quantity'] = offers[ history[2] ][2]
+					#offervalue = offers[ history[2] ][4]
 					
 					features['total_spend'] += float( row[10] )
 					
