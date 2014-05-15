@@ -12,27 +12,15 @@ Some refactoring by Zygmunt Zając <zygmunt@fastml.com>
 from datetime import datetime
 from collections import defaultdict
 
-<<<<<<< HEAD
-loc_offers = "C:/Users/tushar.tank/Documents/GitHub/3PiShopper/Data/offers.csv"
-loc_transactions = "C:/Users/tushar.tank/Documents/GitHub/3PiShopper/Data/transactions.csv"
-loc_train = "C:/Users/tushar.tank/Documents/GitHub/3PiShopper/Data/trainHistory.csv"
-loc_test = "C:/Users/tushar.tank/Documents/GitHub/3PiShopper/Data/testHistory.csv"
+loc_offers = "Data/offersDept.csv"
+loc_transactions = "Data/transactions.csv"
+loc_train = "Data/trainHistory.csv"
+loc_test = "Data/testHistory.csv"
 
 # will be created
-loc_reduced = "C:/Users/tushar.tank/Documents/GitHub/3PiShopper/Data/reduced.csv" 
-loc_out_train = "C:/Users/tushar.tank/Documents/GitHub/3PiShopper/Data/train.vw"
-loc_out_test = "C:/Users/tushar.tank/Documents/GitHub/3PiShopper/Data/test.vw"
-=======
-loc_offers = "offersDept.csv"
-loc_transactions = "transactions.csv"
-loc_train = "trainHistory.csv"
-loc_test = "testHistory.csv"
-
-# will be created
-loc_reduced = "reducedCarts" 
-loc_out_train = "train.vw"
-loc_out_test = "test.vw"
->>>>>>> f604460d9690d1f9b47c4a69424bfab9e561d731
+loc_reduced = "Data/reducedCarts" 
+loc_out_train = "Data/train.vw"
+loc_out_test = "Data./test.vw"
 
 ###
 
@@ -167,15 +155,10 @@ def generate_features(loc_train, loc_test, loc_transactions, loc_out_train, loc_
 					#print
 					
 					features['offer_value'] = offers[ history[2] ][4]
-<<<<<<< HEAD
 					#features['offer_quantity'] = offers[ history[2] ][2]
-					#offervalue = offers[ history[2] ][4]
-=======
-#					features['offer_quantity'] = offers[ history[2] ][2]
 					features['market'] = history[3]
 					features['chain'] = row[1]
                              
->>>>>>> f604460d9690d1f9b47c4a69424bfab9e561d731
 					
 					features['total_spend'] += float( row[10] )
 					
